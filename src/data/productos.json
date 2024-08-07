@@ -1,0 +1,92 @@
+[
+  {
+    "title": "Motherboard AsRock Z370",
+    "description": "Motherboard AsRock Z370, compatible con procesadores Intel de octava generación, soporta overclocking y cuenta con múltiples puertos para expansión.",
+    "price": "85000",
+    "img": "/img/mother1.png",
+    "code": "mother123",
+    "stock": 1,
+    "category": "motherboards",
+    "id": 1
+  },
+  {
+    "title": "Placa GeForce GTX 1070",
+    "description": "Tarjeta gráfica GeForce GTX 1070 con 8GB de memoria GDDR5, ideal para gaming en alta resolución y edición de video.",
+    "price": "250000",
+    "img": "/img/placa2.png",
+    "code": "gtx1070",
+    "stock": 1,
+    "category": "placasdevideo",
+    "id": 2
+  },
+  {
+    "title": "Procesador AMD Ryzen 5",
+    "description": "Procesador AMD Ryzen 5 con 6 núcleos y 12 hilos, ofrece un rendimiento excepcional para multitarea y gaming.",
+    "price": "80000",
+    "img": "/img/procesador1.png",
+    "code": "ryz5",
+    "stock": 1,
+    "category": "procesadores",
+    "id": 3
+  },
+  {
+    "title": "Motherboard MSI GSeries",
+    "description": "Motherboard MSI GSeries, diseñada para jugadores con soporte para procesadores AMD y múltiples opciones de expansión.",
+    "price": "60000",
+    "img": "../img/mother2.png",
+    "code": "mother345",
+    "stock": 1,
+    "category": "motherboards",
+    "id": 4
+  },
+  {
+    "title": "Placa Gigabyte - White",
+    "description": "Tarjeta gráfica Gigabyte en color blanco, equipada con 6GB de memoria para un rendimiento superior en juegos y aplicaciones gráficas.",
+    "price": "250000",
+    "img": "../img/placa1.png",
+    "code": "gyga213",
+    "stock": 1,
+    "category": "placasdevideo",
+    "id": 5
+  },
+  {
+    "title": "Motherboard MSI B85-G43",
+    "description": "Motherboard MSI B85-G43, compatible con procesadores Intel de cuarta generación, con opciones avanzadas de conectividad.",
+    "price": "55000",
+    "img": "../img/mother3.png",
+    "code": "msi231",
+    "stock": 1,
+    "category": "motherboards",
+    "id": 6
+  },
+  {
+    "title": "Placa Gigabyte - Black Orange",
+    "description": "Tarjeta gráfica Gigabyte en color negro y naranja, ideal para configuraciones gaming de alto rendimiento.",
+    "price": "220000",
+    "img": "../img/placa3.png",
+    "code": "gig567",
+    "stock": 1,
+    "category": "placasdevideo",
+    "id": 7
+  },
+  {
+    "title": "Procesador Intel Core I7",
+    "description": "Procesador Intel Core I7, ofrece una experiencia de alto rendimiento para tareas intensivas como edición de video y gaming.",
+    "price": "120000",
+    "img": "../img/procesador2.png",
+    "code": "int213",
+    "stock": 1,
+    "category": "procesadores",
+    "id": 8
+  },
+  {
+    "title": "Procesador AMD Ryzen 5 8700",
+    "description": "Procesador AMD Ryzen 5 8700, combina eficiencia y rendimiento para una experiencia informática fluida.",
+    "price": "250000",
+    "img": "../img/procesador3.png",
+    "code": "ryz532",
+    "stock": 1,
+    "category": "procesadores",
+    "id": 9
+  }
+]

@@ -1,0 +1,246 @@
+* {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+    background-color: #F1FAEE;
+}
+
+.titles{
+    font-weight: bold;
+    text-align: center;
+    text-transform: uppercase;
+    margin: 0.2rem;
+    height: 3rem;
+    object-fit: contain;
+    color: #1D3557;
+}
+
+.productosContenedor {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 1rem;
+    overflow: hidden;
+}
+
+.cardProducto {
+    display: flex;
+    flex-direction: column;
+    width: 25rem;
+    height: 35rem;
+    margin: 1rem;
+    padding: 0.5rem;
+    border: 1px solid #666;
+    border-radius: 10px;
+    transition: .3s;
+    color: #1D3557;
+    box-sizing: border-box;
+}
+
+.cardContent {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.cardImg {
+    width: 95%;
+    height: 15rem;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 10px;
+    margin: 0.5rem;
+}
+
+.cardTitle {
+    font-weight: bold;
+    text-align: center;
+    text-transform: uppercase;
+    margin: 0.2rem;
+    height: 2.5rem;
+    object-fit: contain;
+
+}
+
+.cardPrice {
+    display: block;
+    text-align: center;
+    font-weight: bold;
+    font-size: 18px;
+    margin: 0.05rem;
+}
+
+.cardDescription {
+    text-align: center;
+    font-weight: bold;
+    font-size: 14px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.cardFooter {
+    display: flex;
+    justify-content: center;
+    padding: 0.1rem;
+    font-weight: bold;
+    font-size: 14px;
+    text-align: center;
+}
+
+.cardStock {
+    text-align: center;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.cardCategory {
+    text-align: center;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.cardStock, .cardCategory {
+    margin: 0;
+    padding: 0 0.5rem;
+}
+
+
+.cardButton {
+    text-align: center;
+    text-transform: uppercase;
+    text-decoration: none;
+    font-weight: bold;
+    display: block;
+    width: 50%;
+    margin: 10px auto;
+    border: none;
+    background-color: #00B4D8;
+    color: #fff;
+    padding: 5px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.cardButton:hover {
+    background-color: #2A9D8F;
+}
+
+
+.botonRecargarProductos {
+    text-align: center;
+    text-transform: uppercase;
+    text-decoration: none;
+    font-weight: bold;
+    display: block;
+    width: 30%;
+    margin: 10px auto;
+    border: none;
+    background-color: #00B4D8;
+    font-size: 20px;
+    color: #fff;
+    padding: 5px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.botonRecargarProductos:hover {
+    background-color: #2A9D8F;
+}
+
+
+.formulario-container {
+    width: 100%;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #ffffff;
+    box-sizing: border-box;
+}
+
+
+.formulario-titulo {
+    font-weight: 200;
+    font-size: 2rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+
+.formulario-field {
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+
+.formulario-field label {
+    font-weight: 600;
+    font-size: 0.9rem;
+    letter-spacing: 0.1rem;
+    text-transform: uppercase;
+}
+
+
+.formulario-field input {
+    width: 100%;
+    display: block;
+    font-weight: 300;
+    font-size: 0.8rem;
+    border: none;
+    border-bottom: 1px solid #1D3557;
+    padding: 0.5rem 0;
+    margin-bottom: 1rem;
+    outline: none;
+}
+
+
+.formulario-button {
+    font-weight: 500;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    background: #00B4D8;
+    color: #ffffff;
+    width: 10rem;
+    height: 2.25rem;
+    border: none;
+    border-radius: 2px;
+    outline: none;
+    cursor: pointer;
+    margin-top: 1rem;
+}
+
+.formulario-button:hover {
+    background-color: #2A9D8F;
+}
+
+
+
+.guide {    
+    margin: 20px;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    margin-top: 5rem;
+    margin-right: 10%;
+    margin-left: 10%;
+    font-size: 20px; 
+    color: #1D3557;
+     
+}
+
+.guide h2 {
+    margin-top: 0;
+}
+
+.guide p {
+    margin: 10px 0;
+}
+
+.guide ul {
+    list-style-type: none;
+    margin: 10px 0 10px 20px;
+}
+
+.guide ul li {
+    margin: 5px 0;
+}

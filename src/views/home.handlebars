@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Productos</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+    <h1 class="titles">Mis productos</h1>
+
+    <div class="productosContenedor">
+        {{#each productos}}
+        <div class="cardProducto">
+            <div class="cartItem">
+                <p>ID: {{this.id}}</p>
+                <p class="cardTitle">{{this.title}}</p>
+                <img src="{{this.img}}" alt="" class="cardImg">
+                <p class="cardDescription">{{this.description}}</p>
+                <p class="cardPrice">{{this.price}}</p>
+                <div class="cardFooter">
+                    <p class="cardStock">Stock: {{this.stock}}</p>
+                    <p class="cardCategory">Categoria: {{this.category}}</p>
+                </div>
+                <button class="cardButton">Comprar</button>
+            </div>
+        </div>
+
+        {{/each}}
+    </div>
+</body>
+
+</html>

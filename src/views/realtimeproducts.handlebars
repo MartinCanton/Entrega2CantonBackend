@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real Time Products</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+    <h1 class="titles">Productos en tiempo real</h1>
+    <div id="contenedorProductos"></div>
+
+    <!-- Botón de recarga de productos -->
+    <button id="recargarProductos" class="botonRecargarProductos">Recargar Productos</button>
+
+    <!-- Formulario para agregar nuevos productos -->
+    <form id="agregarProductoForm" class="formulario-container">
+        <h2 class="formulario-titulo">Agregar Producto</h2>
+        <div class="formulario-field">
+            <label for="title">Título</label>
+            <input type="text" id="title" placeholder="Agregar titulo del producto" required>
+        </div>
+        <div class="formulario-field">
+            <label for="description">Descripción</label>
+            <input type="text" id="description" placeholder="Realizar una breve descripcion" required>
+        </div>
+        <div class="formulario-field">
+            <label for="price">Precio</label>
+            <input type="number" id="price" placeholder="Colocar precio" required>
+        </div>
+        <div class="formulario-field">
+            <label for="img">Imagen</label>
+            <input type="text" id="img" placeholder="Ingresar ruta de imagen" required>
+        </div>
+        <div class="formulario-field">
+            <label for="code">Código</label>
+            <input type="text" id="code" placeholder="Debe ser alfanumerico" required>
+        </div>
+        <div class="formulario-field">
+            <label for="stock">Stock</label>
+            <input type="number" id="stock" placeholder="Colocar stock" required>
+        </div>
+        <div class="formulario-field">
+            <label for="category">Categoría</label>
+            <input type="text" id="category" placeholder="Agregar la categoria correspondiente" required>
+        </div>
+        <button type="submit" class="formulario-button">Agregar Producto</button>
+    </form>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.2/socket.io.min.js"></script>
+    <script src="js/main.js"></script>
+
+</body>
