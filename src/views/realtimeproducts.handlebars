@@ -1,56 +1,65 @@
-<!DOCTYPE html>
-<html lang="es">
+ <div class="container">
+        <h1>{{title}}</h1>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Real Time Products</title>
-    <link rel="stylesheet" href="/css/style.css">
-</head>
+        <div class="row">
+            <div class="col-md-8">
+                <ul id="rt-product-list" class="list-unstyled">
+                    {{#each products}}
+                    <li class="mb-3" data-id="{{_id}}">
+                        <h2>{{this.title}}</h2>
+                        <img src="{{{thumbnails}}}" class="img-fluid" alt="{{this.title}}">
+                        <p>{{description}}</p>
+                        <p>${{price}}</p>
+                        <button class="btn btn-danger delete-product" data-id="{{_id}}">Eliminar del catálogo</button>
+                    </li>
+                    {{/each}}
+                </ul>
+            </div>
 
-<body>
-    <h1 class="titles">Productos en tiempo real</h1>
-    <div id="contenedorProductos"></div>
+            <div class="col-md-4">
+                <form id="add-product-form" action="/realtimeproducts" method="post" class="form-horizontal">
+                    <div class="form-group">
+                        <label for="title">Título:</label>
+                        <input type="text" id="title" name="title" class="form-control" required>
+                    </div>
 
-    <!-- Botón de recarga de productos -->
-    <button id="recargarProductos" class="botonRecargarProductos">Recargar Productos</button>
+                    <div class="form-group">
+                        <label for="description">Descripción:</label>
+                        <input type="text" id="description" name="description" class="form-control" required>
+                    </div>
 
-    <!-- Formulario para agregar nuevos productos -->
-    <form id="agregarProductoForm" class="formulario-container">
-        <h2 class="formulario-titulo">Agregar Producto</h2>
-        <div class="formulario-field">
-            <label for="title">Título</label>
-            <input type="text" id="title" placeholder="Agregar titulo del producto" required>
-        </div>
-        <div class="formulario-field">
-            <label for="description">Descripción</label>
-            <input type="text" id="description" placeholder="Realizar una breve descripcion" required>
-        </div>
-        <div class="formulario-field">
-            <label for="price">Precio</label>
-            <input type="number" id="price" placeholder="Colocar precio" required>
-        </div>
-        <div class="formulario-field">
-            <label for="img">Imagen</label>
-            <input type="text" id="img" placeholder="Ingresar ruta de imagen" required>
-        </div>
-        <div class="formulario-field">
-            <label for="code">Código</label>
-            <input type="text" id="code" placeholder="Debe ser alfanumerico" required>
-        </div>
-        <div class="formulario-field">
-            <label for="stock">Stock</label>
-            <input type="number" id="stock" placeholder="Colocar stock" required>
-        </div>
-        <div class="formulario-field">
-            <label for="category">Categoría</label>
-            <input type="text" id="category" placeholder="Agregar la categoria correspondiente" required>
-        </div>
-        <button type="submit" class="formulario-button">Agregar Producto</button>
-    </form>
+                    <div class="form-group">
+                        <label for="price">Precio:</label>
+                        <input type="number" id="price" name="price" class="form-control" required>
+                    </div>
 
+                    <div class="form-group">
+                        <label for="thumbnails">Imagen URL:</label>
+                        <input type="text" id="thumbnails" name="thumbnails" class="form-control">
+                    </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.2/socket.io.min.js"></script>
-    <script src="js/main.js"></script>
+                    <div class="form-group">
+                        <label for="code">Código:</label>
+                        <input type="text" id="code" name="code" class="form-control" required>
+                    </div>
 
-</body>
+                    <div class="form-group">
+                        <label for="stock">Stock:</label>
+                        <input type="number" id="stock" name="stock" class="form-control" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="category">Categoría:</label>
+                        <input type="text" id="category" name="category" class="form-control" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="status">Status (true o false):</label>
+                        <input type="text" id="status" name="status" class="form-control">
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Agregar Producto</button>
+                </form>
+            </div>
+        </div>
+    </div>
