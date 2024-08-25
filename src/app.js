@@ -1,63 +1,87 @@
 import express from "express";
-import { engine } from "express-handlebars";
-import { Server } from "socket.io";
-import productRouter from "./routes/products.router.js";
-import cartRouter from "./routes/carts.router.js";
-import viewsRouter from "./routes/views.router.js";
-import ProductManager from "./controllers/product-manager.js";
-import path from 'path';
+import mongoose from 'mongoose'
+import handlebars from 'express-handlebars'
+import cartsRouter from './routes/carts.router.js';
+import productsRouter from './routes/products.router.js';
+import __dirname from './utils/utils.js'
+import viewsRouter from './routes/views.router.js';
+import { Server } from 'socket.io';
+import productModel from '../src/dao/models/product.model.js';
 
 
-const app = express();
-const PUERTO = 8000;
-const manager = new ProductManager("./src/data/productos.json");
 
-app.engine("handlebars", engine());
-app.set("view engine", "handlebars");
-app.set("views", "./src/views");
+const app = express()
+const PORT = 8080
+
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
+app.use(express.static(__dirname + '/public'));
+
+//mongoose 
+const environment = async () => {
+    try {
+        await mongoose.connect(
+            "mongodb+srv://tinchorc96:admin123@cluster0.lubea.mongodb.net/ecommerce"
+        );
+        console.log("Connected to the database");
+    } catch (err) {
+        console.error("Error while connecting to database", err);
+    }
+};
+environment();
+//Handlebars
+app.engine('handlebars', handlebars.engine())
+app.set('views', __dirname + '/views');
+app.set('view engine', 'handlebars')
 
 
-app.use(express.json());
-app.use(express.static("./src/public"));
-
-app.use("/api/products", productRouter);
-app.use("/api/carts", cartRouter);
+//Routes
+app.use("/api/carts", cartsRouter);
+app.use("/api/products", productsRouter);
 app.use("/", viewsRouter);
 
+//http server
+const httpServer = app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
-const httpServer = app.listen(PUERTO, () => {
-    console.log("Escuchando en el puerto 8000");
-})
-
-const io = new Server(httpServer);
-
-io.on("connection", async (socket) => {
-    console.log("Un cliente se conectó");
-
-    socket.emit("productos", await manager.getProducts());
-
-    socket.on("eliminarProducto", async (id) => {
-        await manager.borrarProducto(id);
-
-        const productosRestantes = await manager.getProducts();
-        io.sockets.emit("productos", productosRestantes);
-
-        if (productosRestantes.length === 0) {
-            socket.emit("noProductos", true);
-        }
-    });
-    socket.on("agregarProducto", async (nuevoProducto) => {
-        try {
-            await manager.addProduct(nuevoProducto);
-            io.sockets.emit("productos", await manager.getProducts());
-        } catch (error) {
-            console.log("Error al agregar el producto:", error);
-        }
-    });
-
-    socket.on("recargarProductos", async () => {
-        const stockPath = path.join("./src/data/stock.json");
-        await manager.cargarProductosDesdeStock(stockPath);
-        io.sockets.emit("productos", await manager.getProducts());
-    });
+//websocket
+const socketServer = new Server(httpServer, {
 });
+
+socketServer.on('connection', socket => {
+    console.log('New client connected');
+
+    socket.on('addProduct', async (productData) => {
+        try {
+            if (!productData.thumbnails) {
+                productData.thumbnails = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRtDExrwaB9Stm_zfRr3TXXpp5njpBzpxeckw&s.net/jpg/02/48/42/64/360_F_248426448_NVKLywWqArG2ADUxDq6QprtIzsF82dMF.jpg";
+            }
+
+            //agrego producto usando productmodel
+
+            const socketAdded = await productModel.create(productData);
+            if (socketAdded) {
+                console.log('Producto nuevo agregado:', productData);
+
+                //emito el evento  con la lista actualizada
+                const updatedProductList = await productModel.find({});
+                socketServer.emit('productListUpdated', updatedProductList);
+
+            }
+        } catch (error) {
+            console.error('Error while adding the product:', error)
+        }
+    });
+
+    //escucho el evento que pide eliminar producto y lo elimino usando productmodel
+    socket.on('deleteProduct', async (productId) => {
+        try {
+            console.log('Intentando eliminar producto con ID:', productId);
+            const successfullyDeleted = await productModel.deleteOne({ _id: productId });
+            if (successfullyDeleted.deletedCount > 0) {
+                socketServer.emit('productDeleted', productId);
+            }
+        } catch (error) {
+            console.error('Error while deleting the product:', error)
+        }
+    });
+})

@@ -6,14 +6,21 @@ Las Tecnologías utilizadas son:
 - Express.js: Framework para Node.js.
 - Handlebars: Para la visualización dinámica de plantillas.
 - Socket.IO: Para la comunicación entre cliente y servidor.
-- File System: Para almacenar y gestionar productos en JSON.
+- Sweet Alert.
+- MongoDB Atlas.
+- Mongoose.
+- Mongoose-paginate-v2.
+- Bootsrap.
+
 
 ## Funcionalidades
-- Guia de utilización: En la ruta https://localhost:8080 podrás ver una inicialización al proyecto con los enlaces a las ruta Products y Realtime Proucts.
-- Visualización de Productos: Muestra una lista de productos ruta https://localhost:8080/products
+- Endpoints API disponibles para utlizar POSTMAN
+- Visualización de Productos: Muestra una lista de productos en la ruta https://localhost:8080/products
 - Agregado de Productos: Permite agregar nuevos productos desde un formulario en la vista realtimeproducts (https://localhost:8080/realtimeproducts).
+- Filtros: Categoria - Disponibilidad - Orden - Limites
 - Eliminación de Productos: Los productos pueden ser eliminados desde la vista realtimeproducts.
 - Actualización en Tiempo Real: Las adiciones y eliminaciones de productos se reflejan automáticamente en todos los clientes conectados.
+- Visualización de Cart: Hay Hardcodeado una vista (http://localhost:8080/cart/66affd4bc723a31ad3519e85) para poder visualizar uno de los carts.
 
 ## Instalación
 1. Clonar el repositorio: mediante git clone 
