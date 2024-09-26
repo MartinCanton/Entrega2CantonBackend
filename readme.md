@@ -11,10 +11,17 @@ Las Tecnologías utilizadas son:
 - Mongoose.
 - Mongoose-paginate-v2.
 - Bootsrap.
+- Passport.js.
+- Passport-jwt.
+- Bcrypt.
+- Jsonwebtoken.
+- Cookie-parser.
+- dotenv.
 
 
 ## Funcionalidades
 - Endpoints API disponibles para utlizar POSTMAN:
+
 **Carts**
  - GET: 
     * Obtener un carrito por id: `https://localhost:8080/api/carts/:cid`
