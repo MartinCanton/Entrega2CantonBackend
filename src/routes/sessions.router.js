@@ -16,7 +16,7 @@ router.post('/register', async (req, res) => {
     try {
         const userExists = await userModel.findOne({ email });
         if (userExists) {
-            return res.status(400).json({ errorMessage: 'This user already exists. Please, login' });
+            return res.status(400).json({ errorMessage: 'El usuario ya existe. Inicia sesion' });
         }
 
         const newCart = await cartModel.create({ products: [] });  
@@ -41,9 +41,9 @@ router.post('/register', async (req, res) => {
         
           //se guarda el token en la cookie      
           res.cookie("jwt", token, { httpOnly: true, secure: false });
-          res.status(200).json({ message: "Register successful" });
+          res.status(200).json({ message: "Registro exitoso" });
         } catch (error) {
-        res.status(500).json({ message: 'server error' });
+        res.status(500).json({ message: 'Error interno del servidor' });
     }
 });
 
@@ -55,7 +55,7 @@ router.post("/login", async (req, res) => {
   try {
     const user = await userModel.findOne({ email });
     if (!user || !isValidPassword(user, password)) {
-      return res.status(401).json({ errorMessage: "Wrong credentials used for login." });
+      return res.status(401).json({ errorMessage: "Las credenciales son erroneas" });
     }
 
     //generación del token
@@ -65,9 +65,9 @@ router.post("/login", async (req, res) => {
 
     //guardar el jwt en la cookie
     res.cookie("jwt", token, { httpOnly: true, secure: false });
-    res.status(200).json({ message: "Login successful" });
+    res.status(200).json({ message: "Login exitoso" });
   } catch (error) {
-    res.status(500).json({ errorMessage: "Server error" });
+    res.status(500).json({ errorMessage: "Error interno del servidor" });
   }
 });
 
@@ -75,9 +75,9 @@ router.post("/login", async (req, res) => {
 router.post('/logout', (req, res) => {
     try{
         res.clearCookie('jwt', { httpOnly: true, secure:false });
-        res.status(200).json({ message: "Logout successful" });
+        res.status(200).json({ message: "Deslogueo exitoso" });
       } catch (error) {
-        res.status(500).json({ errorMessage: "Server error while logging out" });
+        res.status(500).json({ errorMessage: "Error mientras te deslogueabas" });
       }
 });
 
@@ -87,7 +87,7 @@ router.get('/current', passportCall('jwt'), authorization('user'),(req, res) => 
         const cartId = user.cart; 
         res.json({ user, cartId });
     } catch (error) {
-        res.status(500).json({ message: 'Error retrieving user' });
+        res.status(500).json({ message: 'Error al mostrar el usuario' });
     }
 });
 

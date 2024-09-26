@@ -27,12 +27,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 // Confirmación antes de eliminar el producto
                 const confirmDelete = await Swal.fire({
-                    title: 'Are you sure?',
-                    text: 'Do you want to delete this product?',
+                    title: 'Estas seguro?',
+                    text: 'Estas seguro que quieres borrar el producto?',
                     icon: 'warning',
                     showCancelButton: true,
-                    confirmButtonText: "Yes, I don't need it!",
-                    cancelButtonText: 'Cancel'
+                    confirmButtonText: "Borrar !",
+                    cancelButtonText: 'Cancelar'
                 });
 
                 if (!confirmDelete.isConfirmed) {
@@ -57,8 +57,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     event.target.closest('li').remove();
 
                     Swal.fire({
-                        title: 'Product deleted!',
-                        text: 'The product has been deleted from the cart',
+                        title: 'Producto borrado!',
+                        text: 'El producto fue borrado con exito',
                         icon: 'success',
                         confirmButtonText: 'OK'
                     });

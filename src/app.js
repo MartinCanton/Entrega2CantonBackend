@@ -43,14 +43,14 @@ app.use("/api/users", usersRouter);
 app.use("/", viewsRouter);
 
 //http server
-const httpServer = app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+const httpServer = app.listen(PORT, () => console.log(`Servidor corriendo en el puerto: ${PORT}`));
 
 //websocket
 const socketServer = new Server(httpServer, {
 });
 
 socketServer.on('connection', socket => {
-    console.log('New client connected');
+    console.log('Nuevo Cliente Conectado');
 
     socket.on('addProduct', async (productData) => {
         try {
@@ -70,7 +70,7 @@ socketServer.on('connection', socket => {
 
             }
         } catch (error) {
-            console.error('Error while adding the product:', error)
+            console.error('Error al agregar un producto:', error)
         }
     });
 
@@ -83,7 +83,7 @@ socketServer.on('connection', socket => {
                 socketServer.emit('productDeleted', productId);
             }
         } catch (error) {
-            console.error('Error while deleting the product:', error)
+            console.error('Error al eliminar un producto:', error)
         }
     });
 })

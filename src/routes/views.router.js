@@ -63,8 +63,8 @@ router.get('/products', async (req, res) => {
             scripts: ['index.js']
         });
     } catch (error) {
-        console.error("We can't show the products right now", error);
-        res.status(500).send('Error while loading the products');
+        console.error("No podemos mostrar los productos", error);
+        res.status(500).send('Error al cargar los productos');
     }
 });
 
@@ -72,7 +72,7 @@ router.get('/products', async (req, res) => {
 router.get('/cart', passportCall('jwt'), async (req, res) => {
     try {
         if (!req.user) {
-            return res.status(401).render('error401', { message: 'Inicia sesion para ver tus datos', title: "Sin permisos" });
+            return res.status(401).render('error401', { message: 'Inicia sesion para ver tus datos', title: "No estas logueado" });
           }
         let user = req.user
         if (user.toObject) {
@@ -95,7 +95,7 @@ router.get('/cart', passportCall('jwt'), async (req, res) => {
             cartId 
         });
     } catch (error) {
-        console.error('Error getting cart by ID:', error);
+        console.error('Error al buscar un carrito por id:', error);
         res.status(500).json({ error: 'cart not found' });
     }
    
@@ -120,7 +120,7 @@ router.get('/register', isNotAuthenticated, (req, res) => {
 router.get('/profile', passportCall('jwt', { session: false }), async (req, res) => {
     try {
       if (!req.user) {
-        return res.status(401).render('error401', { message: 'Inicia sesion para ver tus datos', title: "Sin permisos" });
+        return res.status(401).render('error401', { message: 'Inicia sesion para ver tus datos', title: "No estas logueado" });
       }
   
       let user = req.user;
@@ -139,7 +139,7 @@ router.get('/profile', passportCall('jwt', { session: false }), async (req, res)
   });
   
   router.get('/error401', (req, res) => {
-    res.status(401).render('error401', { message: 'Inicia sesion para ver tus datos', title: "Sin permisos" });
+    res.status(401).render('error401', { message: 'Inicia sesion para ver tus datos', title: "No estas logueado" });
   });
 
 
@@ -167,8 +167,8 @@ router.get('/realtimeproducts', async (req, res) => {
     
         });
     } catch (error) {
-        console.error("We can't show the products right now", error);
-        res.status(500).send('Error while loading the products');
+        console.error("No podemos mostrar los productos", error);
+        res.status(500).send('Error al cargar los productos');
     }
 }); 
 

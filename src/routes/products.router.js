@@ -44,8 +44,8 @@ router.get('/', async (req, res) => {
 
       res.send({ result: "success", payload: { ...result, prevLink: result.prevLink, nextLink: result.nextLink } });
     } catch (error) {
-        console.error("Error while retrieving the list of products: ", error);
-        res.status(500).json({ error: "Error while retrieving products" });
+        console.error("Error mientras se recuperaban los productos: ", error);
+        res.status(500).json({ error: "Error mientras se recuperaban los productos" });
     }
 });
 
@@ -54,16 +54,16 @@ router.post('/', async (req, res) => {
       let { title, description, code, price, stock, category, thumbnails, status } = req.body;
       console.log(req.body);
       if (!title || !description || !code || !price || stock === undefined || stock === null|| !category ) {
-        return res.send({status:"error", error:"All fields are mandatory, except thumbnails."});
+        return res.send({status:"error", error:"Todos los campos son obligatorios. Excepto Thumbnails"});
     }
       if (typeof status === 'undefined') {
-      return res.send({status:"error", error:"The status field is mandatory."});
+      return res.send({status:"error", error:"El estado es obligatorio."});
     }
       let result = await productModel.create({title, description, code, price, stock, category, thumbnails, status});
       res.send({result: "success", payload: result});
   } catch (error) {
-      console.error('Error  while creating a new product:', error);
-      res.status(500).json({ error: 'Error while creating product' });
+      console.error('Error al crear un producto:', error);
+      res.status(500).json({ error: 'Error mientras se creaba el producto' });
   }
 })
 
@@ -97,8 +97,8 @@ router.put("/:pid", async (req, res) => {
     res.send({result: "success", payload: result});
    
   } catch (error) {
-    console.error("Error while updating the product:", error);
-    res.status(500).json({ error: 'Error while updating product' });
+    console.error("Error al actualizar el producto:", error);
+    res.status(500).json({ error: 'Error mientras actualizaba el producto' });
   }
 });
 
@@ -108,11 +108,11 @@ router.delete('/:pid', async (req, res) => {
 
   try {
     if (!mongoose.Types.ObjectId.isValid(productId)) {
-      return res.status(400).json({ error: 'Invalid product ID' });
+      return res.status(400).json({ error: 'Product ID invalido' });
     }
       let result = await productModel.deleteOne({_id:productId});
       if (result.deletedCount === 0) {
-        return res.status(404).json({ error: 'Product not found' });
+        return res.status(404).json({ error: 'Producto no encontrado' });
       }
 
       await cartModel.updateMany(
@@ -121,8 +121,8 @@ router.delete('/:pid', async (req, res) => {
       );
       res.send({result: "success", payload: result});
   } catch (error) {
-      console.error('Error while deleting the product', error);
-      res.status(500).json({ error: 'Error while deleting product' });
+      console.error('Error al borrar un producto', error);
+      res.status(500).json({ error: 'Error mientras borrabas el producto' });
   }
 });
 
@@ -130,16 +130,16 @@ router.get("/:pid", async (req, res) => {
   try {
     const productId = req.params.pid;
     if (!mongoose.Types.ObjectId.isValid(productId)) {
-      return res.status(400).json({ error: "Invalid product ID. Enter a valid ID" });
+      return res.status(400).json({ error: "Product ID invalido." });
     }
     let result = await productModel.findOne({_id:productId});
     if (!result) {
-      return res.status(404).json({ error: "Product not found" });
+      return res.status(404).json({ error: "Producto no encontrado" });
     }
     res.send({result: "success", payload: result});
     } catch (error) {
-      console.error('Error while fetching the product', error);
-      res.status(500).json({ error: 'Error while fetching product' });
+      console.error('Error al obtener un producto', error);
+      res.status(500).json({ error: 'Error al obtener un producto' });
       
     }
 });
