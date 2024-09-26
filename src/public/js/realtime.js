@@ -76,7 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   
-    // Escucho evento productDeleted para eliminar el producto de la visata
+    // Escucho evento productDeleted para eliminar el producto de la vista
     socket.on('productDeleted', (productId) => {
       console.log('Producto eliminado:', productId);
   
