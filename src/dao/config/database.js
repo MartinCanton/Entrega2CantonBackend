@@ -3,7 +3,7 @@ import dotenv from "dotenv"
 
 dotenv.config()
 
-mongoose.connect(process.env.MONGO.URI)
+mongoose.connect(process.env.MONGO_URI)
 
 const db = mongoose.connection;
 

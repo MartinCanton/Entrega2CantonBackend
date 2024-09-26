@@ -1,9 +1,9 @@
 import { Router } from "express";
 import jwt from 'jsonwebtoken';
-import { createHash, isValidPassword, passportCall } from "../utils/utils";
-import userModel from "../dao/models/user.model";
-import cartModel from "../dao/models/cart.model";
-import { authorization } from "../middlewares/auth";
+import { createHash, isValidPassword, passportCall } from "../utils/utils.js";
+import userModel from "../dao/models/user.model.js";
+import cartModel from "../dao/models/cart.model.js";
+import { authorization } from "../middlewares/auth.js";
 import dotenv from "dotenv";
 
 dotenv.config()
@@ -16,10 +16,10 @@ router.post('/register', async (req, res) => {
     try {
         const userExists = await userModel.findOne({ email });
         if (userExists) {
-            return res.status(400).json({ errorMessage: 'Este usuario ya existe'});    
+            return res.status(400).json({ errorMessage: 'This user already exists. Please, login' });
         }
 
-        const NweCart = await cartModel.create({ products: [] });
+        const newCart = await cartModel.create({ products: [] });  
 
         const newUser = new userModel({
             first_name,
@@ -27,58 +27,67 @@ router.post('/register', async (req, res) => {
             email,
             age,
             password: createHash(password),
-            cart: NweCart._id
+            cart: newCart._id  
         });
+
         await newUser.save();
 
+        //creación del token
         const token = jwt.sign(
-            { id: newUser._id, role: newUser.role},
+            { id: newUser._id, role: newUser.role },
             JWT_SECRET,
-            { expiresIn: "24hs" }
-        );
-
-        res.cookie("jwt", token, { httpOnly: true, secure: false });
-        res.status(200).json({ message: "Registro exitoso" });
-    } catch (error) {
-        res.status(500).json({ message: "Error interno del servidor"});
+            { expiresIn: "1h" }
+          );
+        
+          //se guarda el token en la cookie      
+          res.cookie("jwt", token, { httpOnly: true, secure: false });
+          res.status(200).json({ message: "Register successful" });
+        } catch (error) {
+        res.status(500).json({ message: 'server error' });
     }
 });
+
+
+//login
 
 router.post("/login", async (req, res) => {
-    const { email, password } = req.body;
-    try {
-        const user = await userModel.findOne({ email });
-        if (!user || !isValidPassword(user, password )){
-            return res.status(401).json({ errorMessage: "Las credenciales son erroneas."});
-        }
-
-        let token = jwt.sign({ id: user._id, role: user.role }, JWT_SECRET, {
-            expiresIn: "24hs"
-        });
-
-        res.cookie("jwt", token, { httpOnly: true, secure: false });
-        res.status(200).json({ message: "Login exitoso" });
-    } catch (error){
-        res.status(500).json({ errorMessage: "Error interno del servidor"});
+  const { email, password } = req.body;
+  try {
+    const user = await userModel.findOne({ email });
+    if (!user || !isValidPassword(user, password)) {
+      return res.status(401).json({ errorMessage: "Wrong credentials used for login." });
     }
+
+    //generación del token
+    let token = jwt.sign({ id: user._id, role: user.role }, JWT_SECRET, {
+      expiresIn: "1h",
+    });
+
+    //guardar el jwt en la cookie
+    res.cookie("jwt", token, { httpOnly: true, secure: false });
+    res.status(200).json({ message: "Login successful" });
+  } catch (error) {
+    res.status(500).json({ errorMessage: "Server error" });
+  }
 });
+
 
 router.post('/logout', (req, res) => {
     try{
-        res.clearCookie('jwt', { httpOnly: true, secure: false});
-        res.status(200).json({ message: "Deslogueo exitoso."});
-    } catch (error) {
-        res.status(500).json({ errorMessage: "Error en el deslogueo."});
-    }
+        res.clearCookie('jwt', { httpOnly: true, secure:false });
+        res.status(200).json({ message: "Logout successful" });
+      } catch (error) {
+        res.status(500).json({ errorMessage: "Server error while logging out" });
+      }
 });
 
-router.get('/current', passportCall('jwt'), authorization('user'), (req, res) => {
+router.get('/current', passportCall('jwt'), authorization('user'),(req, res) => {        
     try {
-        const user = req.user;
-        const cartId = user.cart;
+        const user = req.user; 
+        const cartId = user.cart; 
         res.json({ user, cartId });
     } catch (error) {
-        res.status(500).json({ message: "Error mostrando el usuario."});
+        res.status(500).json({ message: 'Error retrieving user' });
     }
 });
 

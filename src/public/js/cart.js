@@ -1,5 +1,3 @@
-import { response } from "express";
-
 document.addEventListener('DOMContentLoaded', () => {
     const deleteFromCartButtons = document.querySelectorAll('.delete-from-cart-button');
 
@@ -8,36 +6,40 @@ document.addEventListener('DOMContentLoaded', () => {
             const productId = event.target.dataset.pid;
 
             try {
+                // Obtener cartId del usuario actual
                 const currentUserResponse = await fetch('/api/sessions/current', {
                     method: 'GET',
                     headers: {
-                        'Content-Type': 'application/json'
+                      "Content-Type": "application/json"
                     },
-                    credentials: 'include'
+                    credentials: 'include'  
                 });
 
                 if (!currentUserResponse.ok) {
-                    throw new Error('Error al obtener la sesion del usuario.');
+                    throw new Error('Error al obtener la sesión del usuario.');
                 }
 
                 const { cartId } = await currentUserResponse.json();
 
                 if (!cartId) {
-                    throw new Error('No se puede obtener el id del carrito.');
+                    throw new Error('No se pudo obtener el cartId');
                 }
+
+                // Confirmación antes de eliminar el producto
                 const confirmDelete = await Swal.fire({
-                    title: 'Estas seguro?',
-                    text: 'Estas seguro de eliminar el producto.',
+                    title: 'Are you sure?',
+                    text: 'Do you want to delete this product?',
                     icon: 'warning',
                     showCancelButton: true,
-                    confirmButtonText: 'Si',
-                    cancelButtonText: 'Cancelar'
+                    confirmButtonText: "Yes, I don't need it!",
+                    cancelButtonText: 'Cancel'
                 });
 
                 if (!confirmDelete.isConfirmed) {
-                    return;
+                    return; 
                 }
 
+                //  solicitud para eliminar el producto del carrito
                 const response = await fetch(`/api/carts/${cartId}/products/${productId}`, {
                     method: 'DELETE',
                     headers: {
@@ -46,22 +48,22 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
 
                 if (!response.ok) {
-                    throw new Error('Error mientras se borraba el producto del carrito');
+                    throw new Error('Error while attempting to delete the product from the cart');
                 }
 
                 const result = await response.json();
-
+                
                 if (result.result === 'success') {
                     event.target.closest('li').remove();
 
                     Swal.fire({
-                        title: 'Producto borrado.',
-                        text: ' El producto fue borrado del carrito.',
+                        title: 'Product deleted!',
+                        text: 'The product has been deleted from the cart',
                         icon: 'success',
                         confirmButtonText: 'OK'
                     });
                 } else {
-                    throw new Error(result.message || 'El producto no puede ser borrado.');
+                    throw new Error(result.message || 'The product couldn´t be deleted');
                 }
             } catch (error) {
                 Swal.fire({

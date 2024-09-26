@@ -72,7 +72,7 @@ router.get('/products', async (req, res) => {
 router.get('/cart', passportCall('jwt'), async (req, res) => {
     try {
         if (!req.user) {
-            return res.status(401).render('error401', { message: 'To retrieve a cart or create one you need to log in first', title: "401 Unauthorized" });
+            return res.status(401).render('error401', { message: 'Inicia sesion para ver tus datos', title: "Sin permisos" });
           }
         let user = req.user
         if (user.toObject) {
@@ -120,7 +120,7 @@ router.get('/register', isNotAuthenticated, (req, res) => {
 router.get('/profile', passportCall('jwt', { session: false }), async (req, res) => {
     try {
       if (!req.user) {
-        return res.status(401).render('error401', { message: 'Unauthorized. Please log in.', title: "401 Unauthorized" });
+        return res.status(401).render('error401', { message: 'Inicia sesion para ver tus datos', title: "Sin permisos" });
       }
   
       let user = req.user;
@@ -139,7 +139,7 @@ router.get('/profile', passportCall('jwt', { session: false }), async (req, res)
   });
   
   router.get('/error401', (req, res) => {
-    res.status(401).render('error401', { message: 'Unauthorized. Please log in.', title: "401 Unauthorized" });
+    res.status(401).render('error401', { message: 'Inicia sesion para ver tus datos', title: "Sin permisos" });
   });
 
 

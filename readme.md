@@ -57,13 +57,22 @@ Las Tecnologías utilizadas son:
 - DELETE: 
     * Eliminar un producto por su ID: `https://localhost:8080/api/products/:pid`  
 
+**Usuarios**
+- GET:
+    * Obtener todos los usuarios: `http://localhost:8080/api/users`
+    * Obtener un usuario por id: `http://localhost:8080/api/users/:uid`
+- PUT:
+    * Actualizar Usuario por id:
 
 - Visualización de Productos: Muestra una lista de productos en la ruta `https://localhost:8080/products`
 - Agregado de Productos: Permite agregar nuevos productos desde un formulario en la vista realtimeproducts (`https://localhost:8080/realtimeproducts`).
 - Filtros: Categoria - Disponibilidad - Orden - Limites
 - Eliminación de Productos: Los productos pueden ser eliminados desde la vista realtimeproducts.
 - Actualización en Tiempo Real: Las adiciones y eliminaciones de productos se reflejan automáticamente en todos los clientes conectados.
-- Visualización de Cart: Hay Hardcodeado una vista (`http://localhost:8080/cart/66affd4bc723a31ad3519e85`) para uno de los carts, a futuro se podrá trabajar sobre él...
+- Visualización de Cart: (`https://localhost:8080/cart`) (Tienes que estar logueado) Puedes ver los productos que se agregaron al carrito y puedes eliminarlos.
+- Mi perfil: (`https://localhost:8080/profile`) (Tienes que estar Logueado) Se puede ver los datos de quien esta logueado (sin datos sensibles). Y se puede desloguear
+- Login: (`https://localhost:8080/login`) Formulario para iniciar sesión
+- Registro: (`https://localhost:8080/register`) Formulario para registrarse
 
 ### Instalación
 1. Clonar el repositorio: mediante git clone 
