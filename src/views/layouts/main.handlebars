@@ -14,24 +14,26 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
-            <a class="navbar-brand" href="http://localhost:8080/products">Ecommerce</a>
+            <a class="navbar-brand" href="/products">Ecommerce</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link fs-5" aria-current="page" href="http://localhost:8080/products">Home</a>
+                        <a class="nav-link fs-5" aria-current="page" href="/products">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link fs-5" href="http://localhost:8080/products">Products</a>
+                        <a class="nav-link fs-5" href="/products">Productos</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link fs-5" href="http://localhost:8080/realtimeproducts">Realtime Products</a>
+                        <a class="nav-link fs-5" href="/realtimeproducts">Realtime Products</a>
                     </li>
+                    <li class="nav-item"></li>
+                        <a class="nav-link fs-5" href="/profile">Mi Cuenta</a>
+                    </li>                    
                     <li class="nav-item">
-                        <!-- Por el momento hardcodeado-->
-                        <a class="nav-link fs-5" href="http://localhost:8080/cart/66affd4bc723a31ad3519e85"><i class="bi bi-cart-fill text-primary"></i></a>
+                        <a class="nav-link fs-5" href="/cart"><i class="bi bi-cart-fill text-primary"></i></a>
                     </li>
                 </ul>
             </div>
@@ -55,13 +57,16 @@
                     <h5 class="text-uppercase">Links</h5>
                     <ul class="list-unstyled mb-0">
                         <li>
-                            <a href="http://localhost:8080/products" class="text-dark">Products</a>
+                            <a href="products" class="text-dark">Productos</a>
                         </li>
                         <li>
-                            <a href="http://localhost:8080/realtimeproducts" class="text-dark">Realtime Products</a>
+                            <a href="/realtimeproducts" class="text-dark">Realtime Products</a>
                         </li>
                         <li>
-                            <a href="http://localhost:8080/cart/66affd4bc723a31ad3519e85" class="text-dark">Carrito</a>
+                            <a href="/profile" class="text-dark">Mi Cuenta</a>
+                        </li>
+                        <li>
+                            <a href=`/cart/${cartId}` class="text-dark">Carrito</a>
                         </li>
                     </ul>
                 </div>

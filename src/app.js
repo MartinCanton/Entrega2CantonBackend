@@ -1,6 +1,14 @@
 import express from "express";
 import mongoose from 'mongoose'
-import handlebars from 'express-handlebars'
+import MongoStore from "connect-mongo";
+import db from './dao/config/database.js';
+import handlebars from 'express-handlebars';
+import sessionsRouter from './routes/sessions.router.js';
+import usersRouter from './routes/users.router.js';
+import passport from "passport";
+import initializePassport from './dao/config/passport.config.js';
+import dotenv from "dotenv";
+import cookieParser from "cookie-parser";
 import cartsRouter from './routes/carts.router.js';
 import productsRouter from './routes/products.router.js';
 import __dirname from './utils/utils.js'
@@ -8,27 +16,19 @@ import viewsRouter from './routes/views.router.js';
 import { Server } from 'socket.io';
 import productModel from '../src/dao/models/product.model.js';
 
-
+dotenv.config();
 
 const app = express()
-const PORT = 8080
+const PORT = process.env.PORT || 8080
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static(__dirname + '/public'));
+app.use(cookieParser())
+initializePassport()
+app.use(passport.initialize())
 
-//mongoose 
-const environment = async () => {
-    try {
-        await mongoose.connect(
-            "mongodb+srv://tinchorc96:admin123@cluster0.lubea.mongodb.net/ecommerce"
-        );
-        console.log("Connected to the database");
-    } catch (err) {
-        console.error("Error while connecting to database", err);
-    }
-};
-environment();
+
 //Handlebars
 app.engine('handlebars', handlebars.engine())
 app.set('views', __dirname + '/views');
@@ -38,6 +38,8 @@ app.set('view engine', 'handlebars')
 //Routes
 app.use("/api/carts", cartsRouter);
 app.use("/api/products", productsRouter);
+app.use("/api/sessions", sessionsRouter);
+app.use("/api/users", usersRouter);
 app.use("/", viewsRouter);
 
 //http server
@@ -56,13 +58,13 @@ socketServer.on('connection', socket => {
                 productData.thumbnails = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRtDExrwaB9Stm_zfRr3TXXpp5njpBzpxeckw&s.net/jpg/02/48/42/64/360_F_248426448_NVKLywWqArG2ADUxDq6QprtIzsF82dMF.jpg";
             }
 
-            //agrego producto usando productmodel
+            
 
             const socketAdded = await productModel.create(productData);
             if (socketAdded) {
                 console.log('Producto nuevo agregado:', productData);
 
-                //emito el evento  con la lista actualizada
+                
                 const updatedProductList = await productModel.find({});
                 socketServer.emit('productListUpdated', updatedProductList);
 
@@ -72,7 +74,7 @@ socketServer.on('connection', socket => {
         }
     });
 
-    //escucho el evento que pide eliminar producto y lo elimino usando productmodel
+    
     socket.on('deleteProduct', async (productId) => {
         try {
             console.log('Intentando eliminar producto con ID:', productId);

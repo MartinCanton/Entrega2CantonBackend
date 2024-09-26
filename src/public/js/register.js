@@ -29,4 +29,4 @@ form.addEventListener('submit', async (event) => {
         console.error('Error en la solicitud:', error);
         errorMessageDiv.innerText = 'Ocurrio un error al procesar la solicitud'
     }
-})
+});
