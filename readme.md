@@ -1,6 +1,6 @@
-# Entrega Final
+# Proyecto Tienda Informatica
 Simulación de tienda Informática.
-La aplicación permite visualizar, agregar y eliminar productos.
+Esta aplicación fue creada 
 Las Tecnologías utilizadas son:
 - Node.js: Para la ejecución en el servidor.
 - Express.js: Framework para Node.js.
@@ -20,7 +20,7 @@ Las Tecnologías utilizadas son:
 
 
 ## Funcionalidades
-- Endpoints API disponibles para utlizar POSTMAN:
+- Endpoints API:
 
 **Carts**
  - GET: 
@@ -61,10 +61,32 @@ Las Tecnologías utilizadas son:
 - GET:
     * Obtener todos los usuarios: `http://localhost:8080/api/users`
     * Obtener un usuario por id: `http://localhost:8080/api/users/:uid`
+
 - PUT:
-    * Actualizar Usuario por id:
+    * Actualizar Usuario por id: `http://localhost:8080/api/users/:uid`
+
+- DELETE:
+    * Eliminar un usuario por id: `http://localhost:8080/api/users/:uid`
+
+**Sessions**
+
+- POST:
+    * LOGIN:
+        `http://localhost:8080/api/sessions/login`
+        Si el login es correcto, devuelve el token.
+
+    * REGISTER:
+        `http://localhost:8080/api/sessions/register`   
+        Si el registro es correcto, devuelve el token. 
+
+    * LOGOUT:
+        `http://localhost:8080/api/sessions/logout`    
+
+
+## Vistas
 
 - Visualización de Productos: Muestra una lista de productos en la ruta `https://localhost:8080/products`
+- La vista REALTIMEPRODUCTS quedó de la entrega pasada y debería pasarse a ser privada para un usuario Admin a futuro, que pueda manipular los prouductos.
 - Agregado de Productos: Permite agregar nuevos productos desde un formulario en la vista realtimeproducts (`https://localhost:8080/realtimeproducts`).
 - Filtros: Categoria - Disponibilidad - Orden - Limites
 - Eliminación de Productos: Los productos pueden ser eliminados desde la vista realtimeproducts.
@@ -80,3 +102,8 @@ Las Tecnologías utilizadas son:
 3. Instalar dependencias: npm install
 4. Iniciar el servidor: npm run dev
 5. Abrir el navegador y navegar a `http://localhost:8080/products`
+
+### Variables de Entorno
+MONGO_URI
+JWT_SECRET
+PORT
