@@ -1,40 +1,12 @@
 import express from 'express';
 import productModel from '../dao/models/product.model.js';
 import cartModel from '../dao/models/cart.model.js';
-
-
+import { isAuthenticated, isNotAuthenticated } from '../middlewares/auth.js';
+import { passportCall } from '../utils/utils.js';
+import jwt from 'jsonwebtoken';
 
 
 const router = express.Router();
-
-router.get('/realtimeproducts', async (req, res) => {
-    try {
-
-        let products = await productModel.find();      
-        products = products.map(product => ({
-            _id: product._id,
-            title: product.title,
-            description: product.description,
-            price: product.price,
-            thumbnails: product.thumbnails,
-            code: product.code,
-            stock: product.stock,
-            category: product.category,
-            status: product.status
-        }));
-        console.log(products) 
-        res.render('realTimeProducts',  {
-            products: products,
-            title: 'Real time products',
-            useWS: true,
-            scripts: ['realtime.js']
-    
-        });
-    } catch (error) {
-        console.error("We can't show the products right now", error);
-        res.status(500).send('Error while loading the products');
-    }
-});
 
 router.get('/products', async (req, res) => {
     let { limit, page, sort, category, status } = req.query;
@@ -97,13 +69,20 @@ router.get('/products', async (req, res) => {
 });
 
 
-router.get('/cart/:cid', async (req, res) => {
-    const { cid } = req.params;
-    //por el momento estoy haciendo pruebas con cart id: 66affd4bc723a31ad3519e85 hardcodeado en la lógica del botón de agregar al carrito
+router.get('/cart', passportCall('jwt'), async (req, res) => {
     try {
-        let result = await cartModel.findOne({_id:cid}).populate('products.productId').lean();
+        if (!req.user) {
+            return res.status(401).render('error401', { message: 'To retrieve a cart or create one you need to log in first', title: "401 Unauthorized" });
+          }
+        let user = req.user
+        if (user.toObject) {
+            user = user.toObject();
+        }
+        let cartId  = user.cart;
+        console.log(cartId)
+        let result = await cartModel.findOne({_id:cartId}).populate('products.productId').lean();
         if (!result) {
-            return res.status(404).json({ error: 'Cart not found' });
+            return res.status(404).send({ error: 'Cart not found' });
         }
         let cartLength = result.products.length 
         let emptyCart = cartLength === 0;
@@ -112,7 +91,8 @@ router.get('/cart/:cid', async (req, res) => {
             title: 'Cart',
             cart: result.products,
             emptyCart,
-            scripts: ['cart.js']
+            scripts: ['cart.js'],
+            cartId 
         });
     } catch (error) {
         console.error('Error getting cart by ID:', error);
@@ -121,9 +101,75 @@ router.get('/cart/:cid', async (req, res) => {
    
   })
 
-
   
+router.get('/login', isNotAuthenticated, (req, res) => {
+
+    res.render('login', {
+        title: 'Login',
+        scripts: ['login.js'],
+       });
+});
+
+router.get('/register', isNotAuthenticated, (req, res) => {
+    res.render('register', {
+        title: 'Register',
+        scripts: ['register.js']
+});
+})
+
+router.get('/profile', passportCall('jwt', { session: false }), async (req, res) => {
+    try {
+      if (!req.user) {
+        return res.status(401).render('error401', { message: 'Unauthorized. Please log in.', title: "401 Unauthorized" });
+      }
+  
+      let user = req.user;
+      if (user.toObject) {
+        user = user.toObject();
+      }
+  
+      res.render('profile', {
+        user,
+        title: 'Profile',
+        scripts: ['profile.js']
+      });
+    } catch (error) {
+      res.status(500).send({ error: 'Error al obtener el perfil' });
+    }
+  });
+  
+  router.get('/error401', (req, res) => {
+    res.status(401).render('error401', { message: 'Unauthorized. Please log in.', title: "401 Unauthorized" });
+  });
 
 
+router.get('/realtimeproducts', async (req, res) => {
+    try {
+
+        let products = await productModel.find();      
+        products = products.map(product => ({
+            _id: product._id,
+            title: product.title,
+            description: product.description,
+            price: product.price,
+            thumbnails: product.thumbnails,
+            code: product.code,
+            stock: product.stock,
+            category: product.category,
+            status: product.status
+        }));
+        console.log(products) 
+        res.render('realTimeProducts',  {
+            products: products,
+            title: 'Real time products',
+            useWS: true,
+            scripts: ['realtime.js']
+    
+        });
+    } catch (error) {
+        console.error("We can't show the products right now", error);
+        res.status(500).send('Error while loading the products');
+    }
+}); 
 
 export default router;

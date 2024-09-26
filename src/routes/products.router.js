@@ -115,7 +115,6 @@ router.delete('/:pid', async (req, res) => {
         return res.status(404).json({ error: 'Product not found' });
       }
 
-      //para eliminar el producto de los carritos que lo tengan y no quede ese error de producto fantasma con id null
       await cartModel.updateMany(
         { 'products.productId': productId },
         { $pull: { products: { productId: productId } } }
