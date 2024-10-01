@@ -104,6 +104,6 @@ Las Tecnologías utilizadas son:
 5. Abrir el navegador y navegar a `http://localhost:8080/products`
 
 ### Variables de Entorno
-MONGO_URI
-JWT_SECRET
-PORT
+MONGO_URI=mongodb+srv://tinchorc96:admin123@cluster0.lubea.mongodb.net/ecommerce
+JWT_SECRET=jwtcoderSecreta
+PORT=8080
