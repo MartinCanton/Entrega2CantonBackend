@@ -14,7 +14,7 @@ import productsRouter from './routes/products.router.js';
 import __dirname from './utils/utils.js'
 import viewsRouter from './routes/views.router.js';
 import { Server } from 'socket.io';
-import productModel from '../src/dao/models/product.model.js';
+import productModel from './models/product.model.js';
 
 dotenv.config();
 

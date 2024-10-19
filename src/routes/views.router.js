@@ -1,6 +1,6 @@
 import express from 'express';
-import productModel from '../dao/models/product.model.js';
-import cartModel from '../dao/models/cart.model.js';
+import productModel from '../models/product.model.js';
+import cartModel from '../models/cart.model.js';
 import { isAuthenticated, isNotAuthenticated } from '../middlewares/auth.js';
 import { passportCall } from '../utils/utils.js';
 import jwt from 'jsonwebtoken';

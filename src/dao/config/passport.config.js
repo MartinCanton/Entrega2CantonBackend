@@ -1,6 +1,6 @@
 import passport from "passport";
 import jwt from "passport-jwt";
-import userService from '../models/user.model.js'
+import userService from '../../models/user.model.js'
 import dotenv from "dotenv"
 
 dotenv.config()

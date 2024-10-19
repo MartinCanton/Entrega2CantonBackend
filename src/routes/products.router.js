@@ -1,7 +1,7 @@
 import {Router} from 'express';
 import mongoose from'mongoose'
-import productModel from '../dao/models/product.model.js';
-import cartModel from '../dao/models/cart.model.js'
+import productModel from '../models/product.model.js';
+import cartModel from '../models/cart.model.js'
 
 const router = Router();
 

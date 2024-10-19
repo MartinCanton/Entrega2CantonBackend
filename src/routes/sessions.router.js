@@ -1,8 +1,8 @@
 import { Router } from "express";
 import jwt from 'jsonwebtoken';
 import { createHash, isValidPassword, passportCall } from "../utils/utils.js";
-import userModel from "../dao/models/user.model.js";
-import cartModel from "../dao/models/cart.model.js";
+import userModel from "../models/user.model.js";
+import cartModel from "../models/cart.model.js";
 import { authorization } from "../middlewares/auth.js";
 import dotenv from "dotenv";
 
