@@ -1,6 +1,6 @@
 import passport from "passport";
 import jwt from "passport-jwt";
-import userService from '../../models/user.model.js'
+import userService from '../models/user.model.js'
 import dotenv from "dotenv"
 
 dotenv.config()
@@ -26,7 +26,7 @@ const options = {
         try {
             const user = await userService.findById(jwt_payload.id);
             if (!user) {
-                return done(null, false, { message: 'User not found' });
+                return done(null, false, { message: 'Usuario no encontrado' });
               }
               return done(null, user);
             } catch (error) {
