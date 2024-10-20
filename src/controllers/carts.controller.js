@@ -88,9 +88,23 @@ export default class CartsController {
                 return res.status(400).send({ result: "error", message: "ID del carrito invalido"});
             }
             const result = await cartService.emptyCart(cid);
-            res.send({ result: "success", payload: reuslt });
+            res.send({ result: "success", payload: result });
         } catch (error) {
             res.stats(500).send({ result:"error", payload: error});
+        }        
+    }
+
+    async completePurchase(req, res) {
+        try {
+            const { cid } = req.params;
+            const { email } = req.user;
+            const result = await cartService.completePurchase(cid, email);
+            if (!result.success) {
+                return res.status(400).json({ result: "error", message: result.message, productsNotPurchased: result.productsNotPurchased, });
+            }
+            res.status(200).json({ result: "success", message: "Compra completada", productsNotPurchased: result.productsNotPurchased, });
+        } catch (error) {
+            res.status(500).json({ result: "error", message: "Error mientras se procesaba la compra", error: error.message});
         }        
     }
 }

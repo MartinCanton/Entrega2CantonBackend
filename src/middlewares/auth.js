@@ -27,3 +27,25 @@ export const authorization = (role) => {
         next();
     }
 }
+
+export const passportCall = (strategy, options = {}) => {
+    return async (req, res, next ) => {
+        passport.authenticate(strategy, options, (err, user, info) => {
+            if (err) {
+                return next(err);
+            }
+
+            if (!user) {
+                if (info && info.name === "TokenExpiredError"){
+                    res.clearCookie('jwt', {httpOnly: true, secure:false });
+                    return res.status(401).json({ message: "Token Expirado"});
+                } else if (info && info.name === 'NoAuthToken') {
+                    return next({ status: 401, message: "Token no autorizado"});
+                }
+                return next();
+            }
+            req.user = user;
+            next();
+        }) (req, res, next);
+    };
+}

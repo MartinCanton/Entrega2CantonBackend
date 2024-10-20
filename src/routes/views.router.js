@@ -1,8 +1,7 @@
 import express from 'express';
 import productModel from '../models/product.model.js';
 import cartModel from '../models/cart.model.js';
-import { isAuthenticated, isNotAuthenticated } from '../middlewares/auth.js';
-import { passportCall } from '../utils/utils.js';
+import { isAuthenticated, isNotAuthenticated, passportCall} from '../middlewares/auth.js';
 import jwt from 'jsonwebtoken';
 
 
@@ -143,7 +142,7 @@ router.get('/profile', passportCall('jwt', { session: false }), async (req, res)
   });
 
 
-router.get('/realtimeproducts', async (req, res) => {
+router.get('/manageproducts', async (req, res) => {
     try {
 
         let products = await productModel.find();      
@@ -159,11 +158,11 @@ router.get('/realtimeproducts', async (req, res) => {
             status: product.status
         }));
         console.log(products) 
-        res.render('realTimeProducts',  {
+        res.render('manageProducts',  {
             products: products,
-            title: 'Real time products',
+            title: 'Manage Products',
             useWS: true,
-            scripts: ['realtime.js']
+            scripts: ['manageProducts.js']
     
         });
     } catch (error) {
