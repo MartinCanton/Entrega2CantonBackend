@@ -3,10 +3,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const addToCartButtons = document.querySelectorAll(".add-to-cart-button");
   
     addToCartButtons.forEach((button) => {
-      button.addEventListener("click", async (event) => {
-        const productId = event.target.dataset.pid;
-        
+      button.addEventListener("click", async (event) => {  
         try {
+          const productId = event.target.dataset.pid;
+          console.log(productId)
+
           const currentUserResponse = await fetch('/api/sessions/current', {
               method: "GET",
               headers: {
@@ -16,14 +17,14 @@ document.addEventListener("DOMContentLoaded", () => {
             });
   
           if (!currentUserResponse.ok) {
-              throw new Error('Error al obtener la sesión del usuario.');
+            throw new Error('Error al obtener la sesión del usuario.');
           }
           
-          const { cartId, user } = await currentUserResponse.json();
-          console.log('Usuario actual:', user);
-          console.log('ID carrito:', cartId);
+            const { cartId, user } = await currentUserResponse.json();
+            console.log('Usuario actual:', user);
+            console.log('ID carrito:', cartId);
 
-          if(!cartId) {
+          if (!cartId) {
             throw new Error('No se puede obtener el id del carrito');
           }
 

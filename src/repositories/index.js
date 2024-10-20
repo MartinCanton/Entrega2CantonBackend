@@ -1,8 +1,8 @@
-import CartsRepository from "./carts.repository.js";
-import ProductsRepository from "./products.repository.js";
-import UsersRepository from "./users.repository.js";
-import SessionsRepository from "./sessions.repository.js";
-import TicketsRepository from "./tickets.repository.js";
+import CartsRepository from "../repositories/carts.repository.js";
+import ProductsRepository from "../repositories/products.repository.js";
+import UsersRepository from "../repositories/users.repository.js";
+import SessionsRepository from "../repositories/sessions.repository.js";
+import TicketsRepository from "../repositories/tickets.repository.js";
 
 
 const cartService = new CartsRepository();
