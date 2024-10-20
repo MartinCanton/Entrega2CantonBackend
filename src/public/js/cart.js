@@ -5,8 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
         button.addEventListener('click', async (event) => {
             const productId = event.target.dataset.pid;
 
-            try {
-                // Obtener cartId del usuario actual
+            try {                
                 const currentUserResponse = await fetch('/api/sessions/current', {
                     method: 'GET',
                     headers: {
@@ -25,7 +24,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     throw new Error('No se pudo obtener el cartId');
                 }
 
-                // Confirmación antes de eliminar el producto
                 const confirmDelete = await Swal.fire({
                     title: 'Estas seguro?',
                     text: 'Estas seguro que quieres borrar el producto?',
@@ -39,7 +37,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     return; 
                 }
 
-                //  solicitud para eliminar el producto del carrito
                 const response = await fetch(`/api/carts/${cartId}/products/${productId}`, {
                     method: 'DELETE',
                     headers: {
@@ -48,7 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
 
                 if (!response.ok) {
-                    throw new Error('Error while attempting to delete the product from the cart');
+                    throw new Error('Error mientras se eliminaba el producto del carrito');
                 }
 
                 const result = await response.json();
@@ -63,7 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         confirmButtonText: 'OK'
                     });
                 } else {
-                    throw new Error(result.message || 'The product couldn´t be deleted');
+                    throw new Error(result.message || 'El producto no puede ser eliminado');
                 }
             } catch (error) {
                 Swal.fire({

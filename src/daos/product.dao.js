@@ -33,4 +33,12 @@ export default class ProductDAO {
     async getProductById(productId) {
         return await productModel.findOne({ _id: productId});
     }
+
+    async findProductsByIds(productIds){
+        return await productModel.find({ _id: { $in: productIds}});
+    }
+
+    isValidProductId(pid) {
+        return mongoose.Types.ObjectId.isValid(pid);
+    }
 }
