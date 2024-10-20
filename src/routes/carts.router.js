@@ -6,7 +6,7 @@ const router = Router();
 const cartsController = new CartsController();
 
 
-router.post('/', passportCall('jwt'), authorization('user'), cartsController.creatCart);
+router.post('/', passportCall('jwt'), authorization('user'), cartsController.createCart);
 
 router.post('/:cid/products/:pid', passportCall('jwt'), authorization('user'), cartsController.addProductToCart);
 
@@ -14,9 +14,9 @@ router.get('/:cid', passportCall('jwt'), authorization('user'), cartsController.
 
 router.put('/:cid/products/:pid', passportCall('jwt'), authorization('user'), cartsController.updateProductQuantity);
 
-router.put('/:cid', passportCall('jwt'), authorization('user'), cartsController.updatedCart);
+router.put('/:cid', passportCall('jwt'), authorization('user'), cartsController.updateCart);
 
-router.delete('/:cid/products/:pid', passportCall('jwt'), authorization('user'), cartsController.deleteProductsFromCart);
+router.delete('/:cid/products/:pid', passportCall('jwt'), authorization('user'), cartsController.deleteProductFromCart);
 
 router.delete('/:cid', passportCall('jwt'), authorization('user'), cartsController.emptyCart);
 

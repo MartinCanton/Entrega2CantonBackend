@@ -1,7 +1,7 @@
 import UserDAO from "../daos/user.dao.js";
 import UserDTO from "../dtos/user.dto.js";
 
-export default class UserRepository {
+export default class UsersRepository {
     constructor() {
         this.userDAO = new UserDAO();
     }

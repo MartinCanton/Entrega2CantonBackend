@@ -19,23 +19,22 @@ document.addEventListener("DOMContentLoaded", () => {
               throw new Error('Error al obtener la sesión del usuario.');
           }
           
-          const { cartId } = await currentUserResponse.json();
+          const { cartId, user } = await currentUserResponse.json();
+          console.log('Usuario actual:', user);
+          console.log('ID carrito:', cartId);
 
           if(!cartId) {
-            throw new Error('Nose puede obtener el id del carrito');
+            throw new Error('No se puede obtener el id del carrito');
           }
 
           const response = await fetch(`/api/carts/${cartId}/products/${productId}`, {
             method: "POST",
             headers: {
-              'Content-Type': 'application/json',
+              "Content-Type": "application/json",
             },
-            body: JSON.stringify({}),
+              bodyParser: JSON.stringify({})
           });
 
-          if (!response.ok) {
-            throw new Error('Error al agregar el producto al carrito.');
-          }
           
           const result = await response.json();
           

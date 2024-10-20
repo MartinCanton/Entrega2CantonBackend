@@ -1,17 +1,17 @@
 import CartsRepository from "./carts.repository.js";
 import ProductsRepository from "./products.repository.js";
-import UserRepository from "./users.repository.js";
+import UsersRepository from "./users.repository.js";
 import SessionsRepository from "./sessions.repository.js";
 import TicketsRepository from "./tickets.repository.js";
 
 
 const cartService = new CartsRepository();
 const productService = new ProductsRepository();
-const userService = new UserRepository();
+const userService = new UsersRepository();
 const sessionService = new SessionsRepository();
-const ticketsService = new TicketsRepository();
+const ticketService = new TicketsRepository();
 
 
 
 
-export {cartService, productService, userService, sessionService, ticketsService};
+export {cartService, productService, userService, sessionService, ticketService};

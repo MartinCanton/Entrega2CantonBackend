@@ -1,42 +1,38 @@
 import { cartService } from "../repositories/index.js";
 
 export default class CartsController {
-    async creatCart(req, res) {
+    async createCart(req, res) {
         try {
-            const result = await cartService.creatCart();
-            res.send({ result: "succes", payload: result });
+            const cart = await cartService.createCart();
+            res.status(201).json({ result: "success", message: "Carrito creado exitosamente", payload: cart });
         } catch (error) {
-            res.status(500).send({ result: "error", payload: error});
-        }        
+            res.status(500).json({ result: "error", message: "Error creando el carrito", error: error.message});
+        }
     }
 
     async getCartById(req, res) {
         try {
             const { cid } = req.params;
-            if (!(await cartService.IsValidCartId(cid))) {
-                return res.status(400).send({ result:"error", message: "ID del carrito inválido"});
-            }
             const cart = await cartService.getCartById(cid);
-            if (!cart){
-                return res.status(404).json({ error: "Carrito no encontrado"});
-            }
-            res.send({ result: "succes", payload: cart});
+            res.status(200).json({ result: "success", message: "Carrito recibido por ID", payload: cart});
         } catch (error) {
-            res.status(500).send({ result: "error", payload: error});
+            res.status(404).json({ result: "error", message: "Error, el carrito no existe", error: error.message});
         }    
     }
 
     async addProductToCart(req, res) {
         try {
-            const { cid, pid } = req.params;
-            const { quantity } = req.body;
-            if (!(await cartService.IsValidCartId(cid)) || !(await cartService.IsValidProductId(pid))){
-                return res.status(400).send({ result: "error", message: "ID invalida"});
+            const {cid, pid } = req.params;
+            let { quantity } = req.body;
+            if (!cid || !pid) {
+                return res.status(400).json({ result: "error", message: "El ID del carrito y el producto son requeridos"});
             }
-            const updatedCart = await cartService.addProductToCart(cid, pid, quantity || 1);
-            res. status(200).json({ message: "Producto añadido", cart: updatedCart});
-        } catch (error) {
-            res.status(500).json({message: error.message});
+            quantity = quantity !== undefined && !isNaN(parseInt(quantity)) && parseInt(quantity) > 0 ? parseInt(quantity) : 1;
+
+            const cart = await cartService.addProductToCart(cid, pid, quantity);
+            res.status(200).json({ result: "success", message: "El producto fue añadido exitosamente", payload: cart});
+        } catch (error) { 
+            res.status(500).json({ result: "error", message: "El producto no puede ser añadido al carrito", error: error.message});
         }
     }
 
@@ -44,53 +40,41 @@ export default class CartsController {
         try {
             const { cid, pid } = req.params;
             const { quantity } = req.body;
-            if(!(await cartService.IsValidCartId(cid)) || !(await cartService.IsValidProductId(pid))){
-                return res.status(400).send({ result: "error", message: "ID invalida"});
-            }
-            const result = await cartService.updateProductQuantity(cid, pid, quantity);
-            res.send({ result: "success", payload: result});
+            const cart = await cartService.updateProductQuantity(cid, pid, quantity);
+            res.status(200).json({ result: "success", message: "La cantidad de productos fue actualizada", payload: cart});
         } catch (error) {
-            res.status(500).send({ result: "error", payload: error});
+            res.status(500).json({ result: "error", message: "La cantidad de productos no pudo ser actualizada", error: error.message});
         }
     }
 
-    async updatedCart(req, res) {
+    async updateCart(req, res) {
         try {
             const { cid } = req.params;
             const { products } = req.body;
-            if (!products || !Array.isArray(products)) {
-                return res.status(400).send({ result: "error", message: "Los productos son requeridos y deben ser un array"});
-            }
-            const result = await cartService.updatedCart(cid, products);
-            res.send({ result: "success", payload: result});
+            const cart = await cartService.updateCart(cid, products);
+            res.status(200).json({ result: "success", message: "El carrito fue actualizado", payload: cart});
         } catch (error) {
-            res.send(500).send({ result: "error", payload: error.message});
+            res.status(500).json({ result: "error", message:"El carrito no pudo ser actualizado", error: error.message});
         }
     }
 
-    async deleteProductsFromCart(req, res) {
+    async deleteProductFromCart(req, res) {
         try {
             const { cid, pid } = req.params;
-            if (!(await cartService.IsValidCartId(cid)) || !(await cartService.IsValidProductId(pid))) {
-                return res.status(400).send({ result: "error", message: "ID invalida"});
-            }
-            const result = await cartService.deleteProductsFromCart(cid, pid);
-            res.send({ result: "success", payload: result});
-        } catch (error) {
-            res.stats(500).send({ result: "error", payload: error});
+            const cart = await cartService.deleteProductFromCart(cid, pid);
+            res.status(200).json({ result: "success", message:"El producto fue eliminado exitosamente", payload: cart});
+        } catch (error) { 
+            res.status(500).json({ result: "error", message: "El producto no pudo ser eliminado", error: error.message});            
         }        
     }
 
     async emptyCart(req, res) {
-        const { cid } = req.params;
         try {
-            if (!(await cartService.IsValidCartId(cid))) {
-                return res.status(400).send({ result: "error", message: "ID del carrito invalido"});
-            }
-            const result = await cartService.emptyCart(cid);
-            res.send({ result: "success", payload: result });
+            const { cid } = req.params;
+            const cart = await cartService.emptyCart(cid);
+            res.status(200).json({ result: "success", message: "El carrito ha sido vaciado", payload: cart});
         } catch (error) {
-            res.stats(500).send({ result:"error", payload: error});
+            res.status(500).json({ result: "error", message:"El carrito no puede ser vaciado", error: error.message});            
         }        
     }
 
@@ -100,9 +84,9 @@ export default class CartsController {
             const { email } = req.user;
             const result = await cartService.completePurchase(cid, email);
             if (!result.success) {
-                return res.status(400).json({ result: "error", message: result.message, productsNotPurchased: result.productsNotPurchased, });
+                return res.status(400).json({ result: "error", message: result.message, productsNotPurchased: result.productsNotPurchased});
             }
-            res.status(200).json({ result: "success", message: "Compra completada", productsNotPurchased: result.productsNotPurchased, });
+            res.status(200).json({ result: "success", message: "Compra completada", productsNotPurchased: result.productsNotPurchased});
         } catch (error) {
             res.status(500).json({ result: "error", message: "Error mientras se procesaba la compra", error: error.message});
         }        

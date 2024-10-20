@@ -161,7 +161,6 @@ router.get('/manageproducts', async (req, res) => {
         res.render('manageProducts',  {
             products: products,
             title: 'Manage Products',
-            useWS: true,
             scripts: ['manageProducts.js']
     
         });

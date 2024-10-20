@@ -1,4 +1,5 @@
 import { sessionService } from "../repositories/index.js";
+import UserDTO from "../dtos/user.dto.js";
 
 export default class SessionsController { 
     async register (req, res) {
@@ -34,11 +35,14 @@ export default class SessionsController {
 
     async getCurrentUser (req, res) {
         try {
-            const user = req.user
-            await sessionService.getCurrentUser(user);
-            res.json({user, cartId });
+            const user = req.user;
+            if (!user){
+                return res.status(401).json({ message: "Usuario no encontrado"});
+            }
+            const userDTO = new UserDTO(user);
+            res.status(200).json({ user: userDTO, cartId: userDTO.cartId});
         } catch (error) {
-            res.status(500).json({ message: "Error recibiendo el usuario"});
+            res.status(500).json({ message: "Error recibiendo el usuario", error: error.message});
         }
     }
 }
