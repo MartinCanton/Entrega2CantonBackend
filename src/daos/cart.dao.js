@@ -7,7 +7,11 @@ export default class CartDAO {
     }
 
     async getCartById(cid){
-        return await cartModel.findById({ _id: cid }).populate('products.productId').lean()
+        return await cartModel.findById(cid).populate('products.productId');
+    }
+
+    async saveCart(cart) {
+        return await cart.save();        
     }
 
     async updateProductQuantity(cid, pid, quantity) {

@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
             headers: {
               "Content-Type": "application/json",
             },
-              bodyParser: JSON.stringify({})
+              body: JSON.stringify({}),
           });
 
           

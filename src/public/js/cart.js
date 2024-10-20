@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const deleteFromCartButtons = document.querySelectorAll('.delete-from-cart-button');
 
-    deleteFromCartButtons.forEach(button => {
+    deleteFromCartButtons.forEach((button) => {
         button.addEventListener('click', async (event) => {
             const productId = event.target.dataset.pid;
 
@@ -47,21 +47,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (!response.ok) {
                     throw new Error('Error mientras se eliminaba el producto del carrito');
                 }
+    
+                event.target.closest('li').remove();
 
-                const result = await response.json();
-                
-                if (result.result === 'success') {
-                    event.target.closest('li').remove();
-
-                    Swal.fire({
-                        title: 'Producto borrado!',
-                        text: 'El producto fue borrado con exito',
-                        icon: 'success',
-                        confirmButtonText: 'OK'
-                    });
-                } else {
-                    throw new Error(result.message || 'El producto no puede ser eliminado');
-                }
+                Swal.fire({
+                    title: 'Producto borrado!',
+                    text: 'El producto fue borrado con exito',
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                });
             } catch (error) {
                 Swal.fire({
                     title: 'Error',
