@@ -3,7 +3,10 @@ import passport from "passport";
 export const isAuthenticated = (req, res, next) => {
     passport.authenticate('jwt', { session: false}, (err, user) =>{
         if (err || !user) {
-            return res.status(401).send({ error: 'Necesitas Loguearte.'});
+            if (req.headers['content-type'] === 'application/json'){
+            return res.status(401).send({ error: 'Necesitas loguearte.'});
+        }
+        return res.redirect('/login');
         }
         req.user = user;
         next();
@@ -13,7 +16,10 @@ export const isAuthenticated = (req, res, next) => {
 export const isNotAuthenticated = (req, res, next) => {
     if (!req.cookies.jwt) {
         return next();
-    } else {
+    }
+        if (req.headers['content-type'] === 'application/json'){
+            return res.status(400).json({ error: "Usuario logueado"});
+        } else {
         res.redirect('/profile');
     }
 };

@@ -1,7 +1,7 @@
 import express from 'express';
 import productModel from '../models/product.model.js';
 import cartModel from '../models/cart.model.js';
-import { isAuthenticated, isNotAuthenticated, passportCall} from '../middlewares/auth.js';
+import { isAuthenticated, isNotAuthenticated, passportCall, authorization} from '../middlewares/auth.js';
 import jwt from 'jsonwebtoken';
 
 
@@ -68,7 +68,7 @@ router.get('/products', async (req, res) => {
 });
 
 
-router.get('/cart', passportCall('jwt'), async (req, res) => {
+router.get('/cart', passportCall('jwt'), authorization('user'), async (req, res) => {
     try {
         if (!req.user) {
             return res.status(401).render('error401', { message: 'Inicia sesion para ver tus datos', title: "No estas logueado" });
@@ -81,7 +81,7 @@ router.get('/cart', passportCall('jwt'), async (req, res) => {
         console.log(cartId)
         let result = await cartModel.findOne({_id:cartId}).populate('products.productId').lean();
         if (!result) {
-            return res.status(404).send({ error: 'Cart not found' });
+            return res.status(404).send({ error: 'Carrito no encontrado' });
         }
         let cartLength = result.products.length 
         let emptyCart = cartLength === 0;
@@ -95,7 +95,7 @@ router.get('/cart', passportCall('jwt'), async (req, res) => {
         });
     } catch (error) {
         console.error('Error al buscar un carrito por id:', error);
-        res.status(500).json({ error: 'cart not found' });
+        res.status(500).json({ error: 'Carrito no encontrado' });
     }
    
   })
@@ -119,7 +119,7 @@ router.get('/register', isNotAuthenticated, (req, res) => {
 router.get('/profile', passportCall('jwt', { session: false }), async (req, res) => {
     try {
       if (!req.user) {
-        return res.status(401).render('error401', { message: 'Inicia sesion para ver tus datos', title: "No estas logueado" });
+        return res.status(401).render('error401', { message: 'Inicia sesion para ver tus datos', title: "401 No estas logueado" });
       }
   
       let user = req.user;
@@ -142,31 +142,14 @@ router.get('/profile', passportCall('jwt', { session: false }), async (req, res)
   });
 
 
-router.get('/manageproducts', async (req, res) => {
+router.get('/manageproducts', authorization('admin'), async (req, res) => {
     try {
-
-        let products = await productModel.find();      
-        products = products.map(product => ({
-            _id: product._id,
-            title: product.title,
-            description: product.description,
-            price: product.price,
-            thumbnails: product.thumbnails,
-            code: product.code,
-            stock: product.stock,
-            category: product.category,
-            status: product.status
-        }));
-        console.log(products) 
-        res.render('manageProducts',  {
-            products: products,
+        res.render('manageProducts', {
             title: 'Manage Products',
-            scripts: ['manageProducts.js']
-    
+            scripts: ['manageProducts.js'],
         });
     } catch (error) {
-        console.error("No podemos mostrar los productos", error);
-        res.status(500).send('Error al cargar los productos');
+        res.status(500).send({ error: 'Error al acceder al Manage Products.'});
     }
 }); 
 

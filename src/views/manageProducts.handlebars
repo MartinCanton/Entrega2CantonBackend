@@ -1,65 +1,63 @@
- <div class="container">
-        <h1>{{title}}</h1>
+<div class="container">
+  <h1>{{title}}</h1>
 
-        <div class="row">
-            <div class="col-md-8">
-                <ul id="rt-product-list" class="list-unstyled">
-                    {{#each products}}
-                    <li class="mb-3" data-id="{{_id}}">
-                        <h2>{{this.title}}</h2>
-                        <img src="{{{thumbnails}}}" class="img-fluid" alt="{{this.title}}">
-                        <p>{{description}}</p>
-                        <p>${{price}}</p>
-                        <button class="btn btn-danger delete-product" data-id="{{_id}}">Eliminar del catálogo</button>
-                    </li>
-                    {{/each}}
-                </ul>
-            </div>
-
-            <div class="col-md-4">
-                <form id="add-product-form" action="/manageproducts" method="post" class="form-horizontal">
-                    <div class="form-group">
-                        <label for="title">Título:</label>
-                        <input type="text" id="title" name="title" class="form-control" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="description">Descripción:</label>
-                        <input type="text" id="description" name="description" class="form-control" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="price">Precio:</label>
-                        <input type="number" id="price" name="price" class="form-control" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="thumbnails">Imagen URL:</label>
-                        <input type="text" id="thumbnails" name="thumbnails" class="form-control">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="code">Código:</label>
-                        <input type="text" id="code" name="code" class="form-control" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="stock">Stock:</label>
-                        <input type="number" id="stock" name="stock" class="form-control" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="category">Categoría:</label>
-                        <input type="text" id="category" name="category" class="form-control" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="status">Status (true o false):</label>
-                        <input type="text" id="status" name="status" class="form-control">
-                    </div>
-
-                    <button type="submit" class="btn btn-primary">Agregar Producto</button>
-                </form>
-            </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h2>Agregar Producto</h2>
+      <form id="add-product-form" class="form-horizontal">
+        <div class="form-group">
+          <label for="title">Titulo:</label>
+          <input type="text" id="title" name="title" class="form-control" required>
         </div>
+
+        <div class="form-group">
+          <label for="description">Descripcion:</label>
+          <input type="text" id="description" name="description" class="form-control" required>
+        </div>
+
+        <div class="form-group">
+          <label for="price">Precio:</label>
+          <input type="number" id="price" name="price" class="form-control" required>
+        </div>
+
+        <div class="form-group">
+          <label for="thumbnails">Imagen URL:</label>
+          <input type="text" id="thumbnails" name="thumbnails" class="form-control">
+        </div>
+
+        <div class="form-group">
+          <label for="code">Codigo:</label>
+          <input type="text" id="code" name="code" class="form-control" required>
+        </div>
+
+        <div class="form-group">
+          <label for="stock">Stock:</label>
+          <input type="number" id="stock" name="stock" class="form-control" required>
+        </div>
+
+        <div class="form-group">
+          <label for="category">Categoria:</label>
+          <input type="text" id="category" name="category" class="form-control" required>
+        </div>
+
+        <div class="form-group">
+          <label for="status">Status (true o false):</label>
+          <input type="text" id="status" name="status" class="form-control">
+        </div>
+
+        <button type="submit" class="btn btn-primary mt-3">Add</button>
+      </form>
     </div>
+
+    <div class="col-md-6">
+      <h2>Eliminar producto</h2>
+      <form id="delete-product-form" class="form-horizontal">
+        <div class="form-group">
+          <label for="productId">Producto ID:</label>
+          <input type="text" id="productId" name="productId" class="form-control" required>
+        </div>
+        <button type="submit" class="btn btn-danger mt-3">Eliminar</button>
+      </form>
+    </div>
+  </div>
+</div>

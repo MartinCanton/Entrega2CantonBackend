@@ -12,9 +12,12 @@ export default class CartsController {
 
     async getCartById(req, res) {
         try {
-            const { cid } = req.params;
+            const cid  = req.params.cid || req.user.cart;
+            if (!cid) {
+                return res.status(400).json({ result: "error", message: "El ID del carrito es necesario." });
+            }
             const cart = await cartService.getCartById(cid);
-            res.status(200).json({ result: "success", message: "Carrito recibido por ID", payload: cart});
+            res.status(200).json({ result: "success", message: "Carrito recibido exitosamente", payload: cart});
         } catch (error) {
             res.status(404).json({ result: "error", message: "Error, el carrito no existe", error: error.message});
         }    

@@ -52,13 +52,13 @@ export default class ProductsController {
         }
     }
 
-    async getProductsById(req, res) {
+    async getProductById(req, res) {
         try {
             const productId = req.params.pid;
             if (!mongoose.Types.ObjectId.isValid(productId)){
                 return res.status(400).json({ error: "ID del producto invalida"});
             }
-            const result = await productService.getProductsById(productId);
+            const result = await productService.getProductById(productId);
             if (!result) {
                 return res.status(404).json({ error: "Producto no encontrado"});
             }

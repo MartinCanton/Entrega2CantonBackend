@@ -24,7 +24,7 @@ export default class SessionsRepository {
         const token = jwt.sign (
             {id: savedUser._id, role: savedUser.role},
             JWT_SECRET,
-            { expiresIn: "2h" }
+            { expiresIn: "1h" }
         );
         return token;
     }
@@ -37,7 +37,7 @@ export default class SessionsRepository {
         const token = jwt.sign(
             { id: user._id, role: user.role},
             JWT_SECRET,
-            {expiresIn: "2h"});
+            {expiresIn: "1h"});
         return token;        
     }
 

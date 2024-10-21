@@ -1,18 +1,17 @@
 import express from "express";
-import mongoose from 'mongoose'
-import MongoStore from "connect-mongo";
+import MongoStore from 'connect-mongo';
 import db from './config/database.js';
-import handlebars from 'express-handlebars';
-import sessionsRouter from './routes/sessions.router.js';
-import usersRouter from './routes/users.router.js';
-import passport from "passport";
-import initializePassport from './config/passport.config.js';
-import dotenv from "dotenv";
-import cookieParser from "cookie-parser";
+import handlebars from 'express-handlebars'
+import sessionsRouter from './routes/sessions.router.js'
 import cartsRouter from './routes/carts.router.js';
 import productsRouter from './routes/products.router.js';
+import usersRouter from './routes/users.router.js';
 import __dirname from './utils/utils.js'
 import viewsRouter from './routes/views.router.js';
+import passport from 'passport';
+import initializePassport from './config/passport.config.js';
+import dotenv from "dotenv"
+import cookieParser from 'cookie-parser'
 
 dotenv.config();
 

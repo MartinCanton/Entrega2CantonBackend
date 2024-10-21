@@ -1,16 +1,17 @@
-import { Router } from "express";
-import { authorization, passportCall } from "../middlewares/auth.js";
-import SessionsController from "../controllers/sessions.controller.js";
+import { Router } from 'express';
+import SessionsController from '../controllers/sessions.controller.js';
+import {authorization, passportCall, isAuthenticated, isNotAuthenticated }  from '../middlewares/auth.js';
+
+
 
 const router = Router();
+
 const sessionsController = new SessionsController();
-//Registro
-router.post('/register', sessionsController.register);
-//Login
-router.post("/login", sessionsController.login);
-//Logout
-router.post('/logout', sessionsController.logout);
-//Current
-router.get('/current', passportCall('jwt'), authorization('user'), sessionsController.getCurrentUser);
+
+router.post('/register', isNotAuthenticated, sessionsController.register);
+router.post('/login', isNotAuthenticated, sessionsController.login);
+router.post('/logout', isAuthenticated, sessionsController.logout);
+router.get('/current', passportCall('jwt'), sessionsController.getCurrentUser);
+
 
 export default router;

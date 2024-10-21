@@ -24,11 +24,11 @@ form.addEventListener('submit', async (event) => {
         if (response.ok) {
             window.location.href = '/profile';  
         } else {
-            errorMessageDiv.innerText = result.errorMessage || 'Error while attemting to register';
+            errorMessageDiv.innerText = result.errorMessage || 'Error mientras se guardaba el registro';
         }
     } catch (error) {
-        console.error('Error in the request:', error);
-        errorMessageDiv.innerText = 'An error has ocurred when proccessing the request ';
+        console.error('Error: ', error);
+        errorMessageDiv.innerText = 'Error en el proceso ';
     }
 });
 

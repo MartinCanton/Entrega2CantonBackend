@@ -112,12 +112,12 @@ export default class CartsRepository {
         for (const item of cart.products) {
             const product = await this.productDAO.getProductById(item.productId);
             if (product.stock < item.quantity ){
-                productsNotPurchased.push({ productId: product._id, requested: item.quantity, available: product.stock });
-                continue;
+                productsNotPurchased.push(item);
+            } else {
+                product.stock -= item.quantity;
+                await this.productDAO.updateProduct(product._id, { stock: product.stock});
+                purchasedProducts.push({ productId: product._id, title: product.title, quantity: item.quantity, price: product.price });
             }
-            product.stock -= item.quantity;
-            await this.productDAO.updateProduct(product._id, { stock: product.stock});
-            purchasedProducts.push({ title: product.title, quantity: item.quantity, price: product.price });
         }
 
         const totalAmount = purchasedProducts.reduce((acc, product) => {

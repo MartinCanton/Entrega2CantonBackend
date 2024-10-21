@@ -23,6 +23,6 @@ export default class CartDAO {
     }
 
     isValidCartId(cid) {
-        return mongoose.Types.ObjectId.isValid({_id: cid });
+        return mongoose.Types.ObjectId.isValid(cid);
     }
 }
