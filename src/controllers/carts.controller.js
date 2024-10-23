@@ -83,15 +83,30 @@ export default class CartsController {
 
     async completePurchase(req, res) {
         try {
-            const { cid } = req.params;
-            const { email } = req.user;
-            const result = await cartService.completePurchase(cid, email);
-            if (!result.success) {
-                return res.status(400).json({ result: "error", message: result.message, productsNotPurchased: result.productsNotPurchased});
-            }
-            res.status(200).json({ result: "success", message: "Compra completada", productsNotPurchased: result.productsNotPurchased});
+          const { cid } = req.params;
+          const { email } = req.user; 
+    
+          const result = await cartService.completePurchase(cid, email);
+    
+          if (!result.success) {
+            return res.status(400).json({
+              result: "error",
+              message: result.message,
+              productsNotPurchased: result.productsNotPurchased,
+            });
+          }
+    
+          res.status(200).json({
+            result: "success",
+            message: "Purchase completed",
+            productsNotPurchased: result.productsNotPurchased,
+          });
         } catch (error) {
-            res.status(500).json({ result: "error", message: "Error mientras se procesaba la compra", error: error.message});
-        }        
-    }
+          res.status(500).json({
+            result: "error",
+            message: "Error while proccessing the purchase",
+            error: error.message,
+          });
+        }
+      }
 }
