@@ -1,6 +1,6 @@
 import userModel from "../models/user.model.js";
 
-export default class userDAO {
+export default class UserDAO {
     async getAllUsers() {
          return await userModel.find();
     }

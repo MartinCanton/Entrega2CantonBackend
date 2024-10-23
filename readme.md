@@ -17,6 +17,9 @@ Las Tecnologías utilizadas son:
 - Jsonwebtoken.
 - Cookie-parser.
 - dotenv.
+- Uuid.
+- Nodemailer.
+
 
 
 ## Funcionalidades
@@ -49,7 +52,7 @@ Las Tecnologías utilizadas son:
     * Obtener producto por id: `https://localhost:8080/api/products/:pid`
 
 - POST:
-    * Crear un producto: `https://localhost:8080/api/products`   (Ejemplo de Estructura en dao/fs/data/ecommerce.products)     
+    * Crear un producto: `https://localhost:8080/api/products`        
 
 - PUT:
     * Actualizar producto por su ID: `https://localhost:8080/api/products/:pid`
@@ -86,8 +89,7 @@ Las Tecnologías utilizadas son:
 ## Vistas
 
 - Visualización de Productos: Muestra una lista de productos en la ruta `https://localhost:8080/products`
-- La vista REALTIMEPRODUCTS quedó de la entrega pasada y debería pasarse a ser privada para un usuario Admin a futuro, que pueda manipular los prouductos.
-- Agregado de Productos: Permite agregar nuevos productos desde un formulario en la vista realtimeproducts (`https://localhost:8080/realtimeproducts`).
+- Agregado de Productos: Permite agregar nuevos productos desde un formulario en la vista manageproducts. El usuario debe tener rol de admin. (`https://localhost:8080/manageproducts`).
 - Filtros: Categoria - Disponibilidad - Orden - Limites
 - Eliminación de Productos: Los productos pueden ser eliminados desde la vista realtimeproducts.
 - Actualización en Tiempo Real: Las adiciones y eliminaciones de productos se reflejan automáticamente en todos los clientes conectados.
@@ -100,10 +102,8 @@ Las Tecnologías utilizadas son:
 1. Clonar el repositorio: mediante git clone 
 2. Abre una terminal en el directorio del proyecto
 3. Instalar dependencias: npm install
-4. Iniciar el servidor: npm run dev
-5. Abrir el navegador y navegar a `http://localhost:8080/products`
+4. Crea un archivo .env en la raiz del proyecto, para agregar las variables de entorno.(.env.example)
+5. Iniciar el servidor: npm run dev
+6. Abrir el navegador y navegar a `http://localhost:8080/products`
 
-### Variables de Entorno
-MONGO_URI=mongodb+srv://tinchorc96:admin123@cluster0.lubea.mongodb.net/ecommerce
-JWT_SECRET=jwtcoderSecreta
-PORT=8080
+
