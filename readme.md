@@ -1,24 +1,40 @@
 # Proyecto Tienda Informatica
 Simulación de tienda Informática.
-Esta aplicación fue creada 
+Esta aplicación fue creada con motivo de la cursada de Backend I Y II para la plataforma Coderhouse.
+Las objetivos de la aplicación son los siguientes:
+    - Autenticación y roles de los Uusarios
+    - Gestión de productos (Creación - Eliminación - Actualización - Visualización)
+    - Gestión de carrito (Creación - Eliminación - Actualización - Visualización )
+    - Pedidos (Tickets)
+    - Stock (Actualización de productos de la base de datos)
+
 Las Tecnologías utilizadas son:
-- Node.js: Para la ejecución en el servidor.
-- Express.js: Framework para Node.js.
-- Handlebars: Para la visualización dinámica de plantillas.
-- Socket.IO: Para la comunicación entre cliente y servidor.
-- Sweet Alert.
-- MongoDB Atlas.
-- Mongoose.
-- Mongoose-paginate-v2.
-- Bootsrap.
-- Passport.js.
-- Passport-jwt.
-- Bcrypt.
-- Jsonwebtoken.
-- Cookie-parser.
-- dotenv.
-- Uuid.
-- Nodemailer.
+    - Node.js: Para la ejecución en el servidor.
+    - Express.js: Framework para Node.js.
+    - Handlebars: Para la visualización dinámica de plantillas.
+    - Socket.IO: Para la comunicación entre cliente y servidor.
+    - Sweet Alert.
+    - MongoDB Atlas.
+    - Mongoose.
+    - Mongoose-paginate-v2.
+    - Bootsrap.
+    - Passport.js.
+    - Passport-jwt.
+    - Bcrypt.
+    - Jsonwebtoken.
+    - Cookie-parser.
+    - dotenv.
+    - Uuid.
+    - Nodemailer.
+
+### Instalación
+1. Clonar el repositorio: mediante git clone 
+2. Abre una terminal en el directorio del proyecto
+3. Instalar dependencias: npm install
+4. Crea un archivo .env en la raiz del proyecto, para agregar las variables de entorno.(.env.example)
+5. Iniciar el servidor: npm run dev
+6. Abrir el navegador y navegar a `http://localhost:8080/products`
+
 
 
 
@@ -89,21 +105,14 @@ Las Tecnologías utilizadas son:
 ## Vistas
 
 - Visualización de Productos: Muestra una lista de productos en la ruta `https://localhost:8080/products`
-- Agregado de Productos: Permite agregar nuevos productos desde un formulario en la vista manageproducts. El usuario debe tener rol de admin. (`https://localhost:8080/manageproducts`).
+- Agregado de Productos: Permite agregar nuevos productos desde un formulario en la vista manage Products. El usuario debe tener rol de admin. (`https://localhost:8080/manageproducts`).
 - Filtros: Categoria - Disponibilidad - Orden - Limites
-- Eliminación de Productos: Los productos pueden ser eliminados desde la vista realtimeproducts.
+- Eliminación de Productos: Los productos pueden ser eliminados desde la vista manage Products.
 - Actualización en Tiempo Real: Las adiciones y eliminaciones de productos se reflejan automáticamente en todos los clientes conectados.
 - Visualización de Cart: (`https://localhost:8080/cart`) (Tienes que estar logueado) Puedes ver los productos que se agregaron al carrito y puedes eliminarlos.
 - Mi perfil: (`https://localhost:8080/profile`) (Tienes que estar Logueado) Se puede ver los datos de quien esta logueado (sin datos sensibles). Y se puede desloguear
 - Login: (`https://localhost:8080/login`) Formulario para iniciar sesión
 - Registro: (`https://localhost:8080/register`) Formulario para registrarse
 
-### Instalación
-1. Clonar el repositorio: mediante git clone 
-2. Abre una terminal en el directorio del proyecto
-3. Instalar dependencias: npm install
-4. Crea un archivo .env en la raiz del proyecto, para agregar las variables de entorno.(.env.example)
-5. Iniciar el servidor: npm run dev
-6. Abrir el navegador y navegar a `http://localhost:8080/products`
 
 
