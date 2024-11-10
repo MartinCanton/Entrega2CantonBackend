@@ -1,4 +1,4 @@
-# Proyecto Tienda Informatica
+### Proyecto Tienda Informatica
 Simulación de tienda Informática.
 Esta aplicación fue creada con motivo de la cursada de Backend I Y II para la plataforma Coderhouse.
 Las objetivos de la aplicación son los siguientes:
@@ -35,11 +35,11 @@ Las Tecnologías utilizadas son:
 5. Iniciar el servidor: npm run dev
 6. Abrir el navegador y navegar a `http://localhost:8080/products`
 7. Archivo .env de ejemplo para cursada:
-    MONGO_URI=mongodb+srv://tinchorc96:admin123@cluster0.lubea.mongodb.net/ecommerce
-    JWT_SECRET=jwtcoderSecreta
-    PORT=8080
-    EMAIL_USER=backendcursada@gmail.com
-    EMAIL_PASS=bbsd awrs qbhb uphh
+    MONGO_URI=mongodb+srv://tinchorc96:admin123@cluster0.lubea.mongodb.net/ecommerce 
+    JWT_SECRET=jwtcoderSecreta 
+    PORT=8080 
+    EMAIL_USER=backendcursada@gmail.com 
+    EMAIL_PASS=bbsd awrs qbhb uphh 
 
 
 
