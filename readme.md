@@ -34,6 +34,12 @@ Las Tecnologías utilizadas son:
 4. Crea un archivo .env en la raiz del proyecto, para agregar las variables de entorno.(.env.example)
 5. Iniciar el servidor: npm run dev
 6. Abrir el navegador y navegar a `http://localhost:8080/products`
+7. Archivo .env de ejemplo para cursada:
+    MONGO_URI=mongodb+srv://tinchorc96:admin123@cluster0.lubea.mongodb.net/ecommerce
+    JWT_SECRET=jwtcoderSecreta
+    PORT=8080
+    EMAIL_USER=backendcursada@gmail.com
+    EMAIL_PASS=bbsd awrs qbhb uphh
 
 
 
